@@ -4,8 +4,6 @@ Minimal, keyboard-driven Arch Linux desktop configuration built around the **Nir
 
 Designed for low idle RAM usage and zero background bloat using lightweight C and Rust Wayland utilities.
 
----
-
 ## Stack Overview
 
 | Component | Tool | Notes |
@@ -22,8 +20,6 @@ Designed for low idle RAM usage and zero background bloat using lightweight C an
 | **Media & System** | `mpv`, `cava`, `bottom`, `fastfetch` | VA-API hardware-accelerated media & system monitoring |
 | **Theming** | `gtk-3.0`, `gtk-4.0`, `nwg-look`, `xsettingsd` | Unified Nord GTK & XWayland appearance |
 | **Portals** | `xdg-desktop-portal-gnome` | PipeWire screen sharing without GTK file-picker overrides |
-
----
 
 ## Repository Structure
 
@@ -54,3 +50,33 @@ dotfiles/
 ├── xdg-desktop-portal/   # Niri screencast portal routing
 ├── xsettingsd/           # XWayland theme settings
 └── yazi/                 # Terminal file manager config
+```
+
+## Installation
+
+### 1. Install Dependencies (Arch Linux)
+```fish
+sudo pacman -S --needed \
+  niri waybar tofi mako swayosd hyprlock hypridle \
+  kitty fish neovim yazi mpv cava bottom fastfetch \
+  xdg-desktop-portal xdg-desktop-portal-gnome \
+  brightnessctl wl-clipboard ttf-jetbrains-mono-nerd \
+  stow git
+```
+
+### 2. Clone & Symlink with GNU Stow
+```fish
+git clone [https://github.com/Zomboy01/dotfiles.git](https://github.com/Zomboy01/dotfiles.git) ~/dotfiles
+cd ~/dotfiles
+
+# Remove default auto-generated fish config if running inside fish
+rm -f ~/.config/fish/config.fish
+
+# Symlink all packages into ~
+stow -v */
+```
+
+### 3. Enable Background Services
+```fish
+sudo systemctl enable --now swayosd-libinput-backend.service
+```
