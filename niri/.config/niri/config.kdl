@@ -181,7 +181,7 @@ binds {
     alt+s allow-when-locked=true { spawn "swayosd-client" "--brightness" "lower"; }
 
     //playerctl
-    alt+end allow-when-locked=true          { spawn "swayosd-client" "--playerctl" "play-pause"; }
+    alt+down allow-when-locked=true          { spawn "swayosd-client" "--playerctl" "play-pause"; }
     alt+Page_Down allow-when-locked=true    { spawn "swayosd-client" "--playerctl" "next"; }
     alt+Page_Up allow-when-locked=true      { spawn "swayosd-client" "--playerctl" "prev"; }
 
