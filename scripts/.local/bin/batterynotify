@@ -22,11 +22,11 @@ while true; do
         "Charging"|"Not charging"|"Full")
           # Trigger only if we just transitioned from Discharging
           if [ "$last_status" = "Discharging" ]; then
-            notify-send -u low "Power Connected" "Charger plugged in ($cur_bat%)."
+            notify-send -c visualctl -u low "Power Connected" "Charger plugged in ($cur_bat%)."
           fi
           ;;
         "Discharging")
-          notify-send -u low "Power Disconnected" "Running on battery ($cur_bat%)."
+          notify-send -c visualctl -u low "Power Disconnected" "Running on battery ($cur_bat%)."
           ;;
       esac
     fi
@@ -46,7 +46,7 @@ while true; do
     threshold=$((cur_bat / 5 * 5))
 
     if [ "$last_notified_bat" != "$threshold" ]; then
-      notify-send -u normal "High Battery Level" "Battery is at $cur_bat%. Charge limit reached."
+      notify-send -c visualctl -u normal "High Battery Level" "Battery is at $cur_bat%. Charge limit reached."
       last_notified_bat="$threshold"
     fi
   fi
