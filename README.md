@@ -2,7 +2,6 @@
 
 Minimal, keyboard-driven Arch Linux desktop configuration built around the **Niri** Wayland compositor and styled with the **Nord** color palette (`#2E3440`, `#88C0D0`, `#ECEFF4`).
 
-Designed for low idle RAM usage and zero background bloat using lightweight C and Rust Wayland utilities.
 
 ## Preview
 
