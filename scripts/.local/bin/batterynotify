@@ -39,7 +39,7 @@ while true; do
     threshold=$(((cur_bat - 1) / 5 * 5))
 
     if [ "$last_notified_bat" != "$threshold" ]; then
-      notify-send -u critical "Low Battery Level" "Battery is at $cur_bat%. Please plug in the charger."
+      notify-send -c visualctl -u high "Low Battery Level" "Battery is at $cur_bat%. Please plug in the charger."
       last_notified_bat="$threshold"
     fi
   elif { [ "$status" = "Charging" ] || [ "$status" = "Not charging" ] || [ "$status" = "Full" ]; } && [ "$cur_bat" -ge "$max_bat" ]; then
