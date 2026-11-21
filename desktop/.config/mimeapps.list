@@ -1,0 +1,6 @@
+[Default Applications]
+x-scheme-handler/discord=legcord.desktop
+inode/directory=nordend.desktop
+x-scheme-handler/discord-424004941485572097=discord-424004941485572097.desktop
+
+[Added Associations]

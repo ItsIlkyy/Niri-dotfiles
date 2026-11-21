@@ -1,0 +1,55 @@
+#!/bin/sh
+
+BAT="/sys/class/power_supply/BAT0"
+min_bat=40
+max_bat=90
+seconds=30
+
+last_notified_bat=""
+last_status=""
+
+while true; do
+  cur_bat=$(cat "$BAT/capacity" 2>/dev/null)
+  status=$(cat "$BAT/status" 2>/dev/null)
+
+  # Skip iteration if sysfs wasn't ready (e.g., right after resume)
+  [ -z "$cur_bat" ] && sleep "$seconds" && continue
+
+  if [ "$status" != "$last_status" ]; then
+    # Only notify after initial startup once last_status is populated
+    if [ -n "$last_status" ]; then
+      case "$status" in
+        "Charging"|"Not charging"|"Full")
+          # Trigger only if we just transitioned from Discharging
+          if [ "$last_status" = "Discharging" ]; then
+            notify-send -u low "Power Connected" "Charger plugged in ($cur_bat%)."
+          fi
+          ;;
+        "Discharging")
+          notify-send -u low "Power Disconnected" "Running on battery ($cur_bat%)."
+          ;;
+      esac
+    fi
+
+    last_notified_bat=""
+    last_status="$status"
+  fi
+
+  if [ "$status" = "Discharging" ] && [ "$cur_bat" -le "$min_bat" ]; then
+    threshold=$(((cur_bat - 1) / 5 * 5))
+
+    if [ "$last_notified_bat" != "$threshold" ]; then
+      notify-send -u critical "Low Battery Level" "Battery is at $cur_bat%. Please plug in the charger."
+      last_notified_bat="$threshold"
+    fi
+  elif { [ "$status" = "Charging" ] || [ "$status" = "Not charging" ] || [ "$status" = "Full" ]; } && [ "$cur_bat" -ge "$max_bat" ]; then
+    threshold=$((cur_bat / 5 * 5))
+
+    if [ "$last_notified_bat" != "$threshold" ]; then
+      notify-send -u normal "High Battery Level" "Battery is at $cur_bat%. Charge limit reached."
+      last_notified_bat="$threshold"
+    fi
+  fi
+
+  sleep "$seconds"
+done
