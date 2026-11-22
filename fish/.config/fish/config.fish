@@ -10,6 +10,9 @@ fastfetch
 end
 
 
-# Hermes Agent command
-fish_add_path "$HOME/.local/bin"
-
+#XTERM KITTY
+if test "$TERM" = "xterm-kitty"
+    function ssh --wraps=ssh --description "Set TERM to xterm-256color for ssh"
+        TERM=xterm-256color command ssh $argv
+    end
+end
