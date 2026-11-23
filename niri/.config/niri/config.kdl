@@ -74,7 +74,7 @@ spawn-at-startup "hypridle"
 spawn-at-startup "swayosd-server"
 spawn-at-startup "awww-daemon" 
 spawn-at-startup "batterynotify"
-spawn-at-startup "$HOME/.config/walls/toggle-walls.sh"
+spawn-at-startup "$HOME/.config/walls/script/toggle-walls.sh"
 
 layer-rule {
     match namespace="waybar"
@@ -168,7 +168,7 @@ binds {
     Mod+A hotkey-overlay-title="Run an Application: tofi" { spawn "bash" "-c" "tofi-drun --drun-launch=true || pkill tofi-drun"; }
 
     // randomize wallpaper
-    Mod+o hotkey-overlay-title="Random Wallpaper" { spawn "bash" "-c" "./.config/walls/toggle-wallapper.sh"; }
+    Mod+o hotkey-overlay-title="Random Wallpaper" { spawn "bash" "-c" "./.config/walls/script/toggle-wallapper.sh"; }
 
     // Volume Keybinds
     alt+f allow-when-locked=true                { spawn "swayosd-client" "--output-volume" "raise"; }
